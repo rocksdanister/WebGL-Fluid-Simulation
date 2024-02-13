@@ -76,6 +76,14 @@
     "value": false,
     "text": "Size Scaling"
   },
+  "splatVelocity": {
+    "max": 60,
+    "min": 0,
+    "tick": 10,
+    "text": "Splat Velocity",
+    "type": "slider",
+    "value": 10
+  },
   "shading": {
     "type": "checkbox",
     "value": true,
