@@ -127,6 +127,10 @@ function generateColor() {
 
 let _randomSplats = false;
 let _audioReact = false;
+let colorRange=["#000000","#000000"];
+let splatRadiusModulationEnabled=false;
+let baseRadius=config.SPLAT_RADIUS;
+let splatVelocity=100;
 function livelyPropertyListener(name, val) {
   switch (name) {
     case "quality":
@@ -151,6 +155,9 @@ function livelyPropertyListener(name, val) {
       break;
     case "splatRadius":
       config.SPLAT_RADIUS = val / 100;
+      break;
+    case "splatVelocity":
+      splatVelocity=val;
       break;
     case "shading":
       config.SHADING = val;
@@ -1501,8 +1508,8 @@ function multipleSplats(amount) {
     color.b *= 10.0;
     const x = Math.random();
     const y = Math.random();
-    const dx = 1000 * (Math.random() - 0.5);
-    const dy = 1000 * (Math.random() - 0.5);
+    const dx = 1000 * (Math.random() - 0.5)*splatVelocity/10;
+    const dy = 1000 * (Math.random() - 0.5)*splatVelocity/10;
     splat(x, y, dx, dy, color);
   }
 }
