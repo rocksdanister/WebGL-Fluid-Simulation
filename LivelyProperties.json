@@ -76,6 +76,11 @@
     "value": false,
     "text": "Size Scaling"
   },
+  "splatCircleEnabled": {
+    "type": "checkbox",
+    "value": false,
+    "text": "Splat Circle"
+  },
   "splatVelocity": {
     "max": 60,
     "min": 0,

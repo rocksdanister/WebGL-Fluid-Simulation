@@ -99,37 +99,46 @@ function livelyAudioListener(audioArray) {
 
   bass /= config.FREQ_RANGE * 2 * config.FREQ_MULTI;
   let amount=Math.floor(bass * config.SOUND_SENSITIVITY * 10) - lastBass;
-  if (amount>0){
-    let multiplier=1;
-    if(splatRadiusModulationEnabled){
-      let volume=audioArray.reduce((a,b)=>a+b);
-      if(volume>=50){
-        multiplier=8;
-      }
-      else if (volume>=40){
-        multiplier=3;
-      }
-      config.SPLAT_RADIUS=baseRadius*multiplier;
-    }
-    //console.log(volume,multiplier,config.SPLAT_RADIUS);
-    multipleSplats(amount);
-  }
   lastBass += amount;
+  if (amount<0){
+    return
+  }
+  if(splatCircleEnabled&&amount>=4){
+    config.SPLAT_RADIUS=0.2;
+    splatCircle();
+    config.SPLAT_RADIUS=baseRadius;
+    return;
+  }
+  let multiplier=1;
+  if(splatRadiusModulationEnabled){
+    let volume=audioArray.reduce((a,b)=>a+b);
+    if(volume>=50){
+      multiplier=8;
+    }
+    else if (volume>=40){
+      multiplier=3;
+    }
+    config.SPLAT_RADIUS=baseRadius*multiplier;
+  }
+  multipleSplats(amount);
+  config.SPLAT_RADIUS=baseRadius;
+}
+function splatCircle() {
+  const color = generateColor();
+  color.r *= 10.0;
+  color.g *= 10.0;
+  color.b *= 10.0;
+  const x = 0.5;
+  const y = 0.5;
+  const amount=8;
+  for (let i = 0; i < amount; i++) {
+    const dx = Math.cos(2*Math.PI/amount*i);
+    const dy = Math.sin(2*Math.PI/amount*i);
+    const speed=2000;
+    splat(x+dx/10/1.5, y+dy/10, dx*speed, dy*speed, color);
+  }
 }
 
-function multipleSplats(amount) {
-  for (let i = 0; i < amount; i++) {
-    const color = config.COLORFUL ? generateColor() : Object.assign({}, config.POINTER_COLOR.getRandom());
-    color.r *= 10.0;
-    color.g *= 10.0;
-    color.b *= 10.0;
-    const x = canvas.width * Math.random();
-    const y = canvas.height * Math.random();
-    const dx = 1000 * (Math.random() - 0.5);
-    const dy = 1000 * (Math.random() - 0.5);
-    splat(x, y, dx, dy, color);
-  }
-}
 
 function generateColor() {
   let c = HSVtoRGB(Math.random(), 1.0, 1.0);
@@ -143,6 +152,7 @@ let _randomSplats = false;
 let _audioReact = false;
 let colorRange=["#000000","#000000"];
 let splatRadiusModulationEnabled=false;
+let splatCircleEnabled=false;
 let baseRadius=config.SPLAT_RADIUS;
 let splatVelocity=100;
 function livelyPropertyListener(name, val) {
@@ -172,6 +182,9 @@ function livelyPropertyListener(name, val) {
       break;
     case "splatRadiusModulationEnabled":
       splatRadiusModulationEnabled=val;
+      break;
+    case "splatCircleEnabled":
+      splatCircleEnabled=val;
       break;
     case "splatVelocity":
       splatVelocity=val;
