@@ -98,9 +98,23 @@ function livelyAudioListener(audioArray) {
   for (let i = 0; i <= config.FREQ_RANGE; i++) bass += audioArray[i] * 2;
 
   bass /= config.FREQ_RANGE * 2 * config.FREQ_MULTI;
-
-  multipleSplats(Math.floor(bass * config.SOUND_SENSITIVITY * 10) - lastBass);
-  lastBass = (bass, Math.floor(bass * config.SOUND_SENSITIVITY * 10));
+  let amount=Math.floor(bass * config.SOUND_SENSITIVITY * 10) - lastBass;
+  if (amount>0){
+    let multiplier=1;
+    if(splatRadiusModulationEnabled){
+      let volume=audioArray.reduce((a,b)=>a+b);
+      if(volume>=50){
+        multiplier=8;
+      }
+      else if (volume>=40){
+        multiplier=3;
+      }
+      config.SPLAT_RADIUS=baseRadius*multiplier;
+    }
+    //console.log(volume,multiplier,config.SPLAT_RADIUS);
+    multipleSplats(amount);
+  }
+  lastBass += amount;
 }
 
 function multipleSplats(amount) {
@@ -128,6 +142,8 @@ function generateColor() {
 let _randomSplats = false;
 let _audioReact = false;
 let colorRange=[-1,-1];
+let splatRadiusModulationEnabled=false;
+let baseRadius=config.SPLAT_RADIUS;
 function livelyPropertyListener(name, val) {
   switch (name) {
     case "quality":
@@ -151,7 +167,10 @@ function livelyPropertyListener(name, val) {
       config.CURL = val;
       break;
     case "splatRadius":
-      config.SPLAT_RADIUS = val / 100;
+      baseRadius=config.SPLAT_RADIUS = val / 100;
+      break;
+    case "splatRadiusModulationEnabled":
+      splatRadiusModulationEnabled=val;
       break;
     case "shading":
       config.SHADING = val;
@@ -1683,7 +1702,7 @@ function generateColor() {
   let c,l=colorRange[0],r=colorRange[1];
   if(l!=-1&&r!=-1){
       if(r<l){
-          r+=1
+          r+=1;
       }
       c=Math.random()*(r-l)+l;
       if(c>1){

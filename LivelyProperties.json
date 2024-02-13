@@ -64,12 +64,17 @@
     "value": 20
   },
   "splatRadius": {
-    "max": 100,
+    "max": 150,
     "min": 1,
     "tick": 100,
     "text": "Splat Radius",
     "type": "slider",
     "value": 20
+  },
+  "splatRadiusModulationEnabled": {
+    "type": "checkbox",
+    "value": false,
+    "text": "Size Scaling"
   },
   "shading": {
     "type": "checkbox",
