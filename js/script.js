@@ -100,7 +100,7 @@ function livelyAudioListener(audioArray) {
   bass /= config.FREQ_RANGE * 2 * config.FREQ_MULTI;
   let amount=Math.floor(bass * config.SOUND_SENSITIVITY * 10) - lastBass;
   lastBass += amount;
-  if (amount<0){
+  if (amount<=0){
     return
   }
   if(splatCircleEnabled&&amount>=4){
@@ -154,7 +154,7 @@ let colorRange=["#000000","#000000"];
 let splatRadiusModulationEnabled=false;
 let splatCircleEnabled=false;
 let baseRadius=config.SPLAT_RADIUS;
-let splatVelocity=100;
+let splatVelocity=1;
 function livelyPropertyListener(name, val) {
   switch (name) {
     case "quality":
@@ -187,7 +187,7 @@ function livelyPropertyListener(name, val) {
       splatCircleEnabled=val;
       break;
     case "splatVelocity":
-      splatVelocity=val;
+      splatVelocity=val/10;
       break;
     case "shading":
       config.SHADING = val;
@@ -1567,8 +1567,8 @@ function multipleSplats(amount) {
     color.b *= 10.0;
     const x = Math.random();
     const y = Math.random();
-    const dx = 1000 * (Math.random() - 0.5)*splatVelocity/10;
-    const dy = 1000 * (Math.random() - 0.5)*splatVelocity/10;
+    const dx = 1000 * (Math.random() - 0.5)*splatVelocity;
+    const dy = 1000 * (Math.random() - 0.5)*splatVelocity;
     splat(x, y, dx, dy, color);
   }
 }
