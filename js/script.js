@@ -225,6 +225,12 @@ function livelyPropertyListener(name, val) {
     case "imgSelect":
       if (val != null) document.body.style.backgroundImage = `url('${val.replace("\\", "/")}')`;
       break;
+    case "imgOverlay":
+      if (val != null) document.querySelector("#overlay").style.backgroundImage = `url('${val.replace("\\", "/")}')`;
+      break;
+    case "removeOverlay":
+      document.querySelector("#overlay").style.backgroundImage = null;
+      break;
     case "randomSplats":
       _randomSplats = val;
       break;

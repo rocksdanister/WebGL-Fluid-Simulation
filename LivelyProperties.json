@@ -83,6 +83,16 @@
     "type": "slider",
     "value": 10
   },
+  "colorLeft": {
+    "text": "color left",
+    "type": "color",
+    "value": "#000000"
+  },
+  "colorRight": {
+    "text": "color right",
+    "type": "color",
+    "value": "#000000"
+  },
   "shading": {
     "type": "checkbox",
     "value": true,
@@ -132,23 +142,26 @@
   "imgSelect": {
     "type": "folderDropdown",
     "value": "pexels-neosiam-601798.jpg",
-    "text": "Image",
+    "text": "Image Background",
     "filter": "*.jpg|*.png",
     "folder": "wallpapers"
   },
   "bgImgChk": {
     "type": "checkbox",
     "value": false,
-    "text": "Background"
+    "text": "Background Enabled"
   },
-  "colorLeft": {
-    "text": "color left",
-    "type": "color",
-    "value": "#000000"
+  "imgOverlay": {
+    "type": "folderDropdown",
+    "value": "",
+    "text": "Image Overlay",
+    "filter": "*.jpg|*.png",
+    "folder": "wallpapers"
   },
-  "colorRight": {
-    "text": "color right",
-    "type": "color",
-    "value": "#000000"
-  },
+  "removeOverlay" : {
+    "text" : "Remove Overlay",
+    "type" : "button",
+    "value" : "Remove"
+    }
+
 }

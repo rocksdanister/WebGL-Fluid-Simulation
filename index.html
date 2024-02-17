@@ -41,11 +41,20 @@
                 width: 100%;
                 height: 100%;
             }
+            #overlay{
+                pointer-events: none;
+                width: 100%;
+                height: 100%;
+                position: absolute;
+                top:0; 
+                background-size: cover !important;
+            }
         </style>
     </head>
     
     <body>
         <canvas></canvas>
+        <div id="overlay">
         <script src="js/script.js"></script>
     </body>
 </html>
