@@ -9,6 +9,16 @@
     "value": false,
     "text": "Random Splats"
   },
+  "useMouse": {
+    "type": "dropdown",
+    "value": 2,
+    "text": "Use Mouse for Splats",
+    "items": [
+      "Never",
+      "On Press",
+      "Always"
+    ]
+  },
   "quality": {
     "type": "dropdown",
     "value": 0,
