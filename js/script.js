@@ -194,6 +194,9 @@ function livelyPropertyListener(name, val) {
     case "audioReact":
       _audioReact = val;
       break;
+    case "useMouse":
+      _useMouse = val;
+      break;
   }
 }
 
@@ -1542,6 +1545,7 @@ function checkLastMove() {
 }
 
 let _isMouseDown = false;
+let _useMouse = 2;
 canvas.addEventListener('mousedown', e => {
     _isMouseDown = true;
     /*

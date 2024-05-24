@@ -11,7 +11,7 @@
   },
   "useMouse": {
     "type": "dropdown",
-    "value": 1,
+    "value": 2,
     "text": "Use Mouse for Splats",
     "items": [
       "Never",
