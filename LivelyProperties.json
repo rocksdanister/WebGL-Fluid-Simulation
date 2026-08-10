@@ -131,7 +131,7 @@
     "tick": 101,
     "text": "Bloom Threshold",
     "type": "slider",
-    "value": 75
+    "value": 5
   },
   "sunRaysEnable": {
     "type": "checkbox",
