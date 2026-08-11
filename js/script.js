@@ -807,15 +807,22 @@ const displayShaderSource = `
     #endif
 
     #ifdef BLOOM
-        float noise = texture2D(uDithering, vUv * ditherScale).r;
-        noise = noise * 2.0 - 1.0;
-        bloom += noise / 255.0;
-        bloom = linearToGamma(bloom);
+        // Add bloom in linear space
         c += bloom;
     #endif
 
+        // Gamma correction to sRGB
+        vec3 cGamma = linearToGamma(c);
+
+    #ifdef BLOOM
+        // Dithering in gamma space - small amplitude avoids raising black level
+        float noise = texture2D(uDithering, vUv * ditherScale).r;
+        cGamma += (noise - 0.5) / 255.0;
+    #endif
+
+        // Alpha based on linear luminance - transparent areas remain black
         float a = max(c.r, max(c.g, c.b));
-        gl_FragColor = vec4(c, a);
+        gl_FragColor = vec4(cGamma, a);
     }
 `;
 
